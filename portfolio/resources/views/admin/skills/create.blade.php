@@ -1,0 +1,67 @@
+@extends('layout')
+
+@section('title', 'Create Skill - Admin')
+
+@section('content')
+<section class="py-16">
+    <div class="max-w-2xl mx-auto px-4">
+        <h1 class="text-4xl font-bold mb-8">Add New Skill</h1>
+
+        @if($errors->any())
+            <div class="bg-red-100 text-red-800 px-4 py-3 rounded mb-4">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>• {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('admin.skills.store') }}" method="POST" class="bg-white p-8 rounded-lg shadow">
+            @csrf
+
+            <div class="mb-6">
+                <label class="block font-semibold mb-2">Skill Name *</label>
+                <input type="text" name="name" value="{{ old('name') }}" required 
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600"
+                    placeholder="e.g. Laravel, JavaScript">
+            </div>
+
+            <div class="mb-6">
+                <label class="block font-semibold mb-2">Category *</label>
+                <input type="text" name="category" value="{{ old('category') }}" required 
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600"
+                    placeholder="e.g. Backend, Frontend, Database">
+            </div>
+
+            <div class="mb-6">
+                <label class="block font-semibold mb-2">Proficiency Level (1-100)</label>
+                <input type="number" name="proficiency" value="{{ old('proficiency', 50) }}" min="1" max="100" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600">
+            </div>
+
+            <div class="mb-6">
+                <label class="block font-semibold mb-2">Description</label>
+                <textarea name="description" rows="4" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600">{{ old('description') }}</textarea>
+            </div>
+
+            <div class="mb-6">
+                <label class="block font-semibold mb-2">Icon (Font Awesome class)</label>
+                <input type="text" name="icon" value="{{ old('icon') }}" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-600"
+                    placeholder="e.g. fab fa-laravel">
+            </div>
+
+            <div class="flex gap-4">
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                    Add Skill
+                </button>
+                <a href="{{ route('admin.skills.index') }}" class="border border-gray-300 px-6 py-2 rounded hover:bg-gray-50">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+@endsection
